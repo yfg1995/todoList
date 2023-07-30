@@ -14,13 +14,6 @@ function App() {
     }
   ])
 
-  // const handleEditSubmit = (id, title) => {
-  //   const editedTask = [...tasks].filter(task => task.id === id)
-  //   const remainigTasks = tasks.filter(task => task.id !== id)
-  //   editedTask.title = title;
-  //   setTasks([...remainigTasks, ...editedTask])
-  // } ***********************dobar nacin ali ima problem kad se edituje, onda ga pozicionira na bottom
-
   const handleEditSubmit = (id, title) => {
     const taskIndex = tasks.findIndex(task => task.id === id)
 
