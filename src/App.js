@@ -1,33 +1,41 @@
 import { useState } from "react";
-import Content from "./Content";
+import ListOfTasks from "./ListOfTasks";
 import AddTask from "./AddTask";
 
 function App() {
   const [tasks, setTasks] = useState([
     {
       id: 1,
-      title: 'Task 1',
-      body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero quaerat perspiciatis, ullam excepturi aperiam aut?'
+      title: 'Task 1'
     },
     {
       id: 2,
-      title: 'Task 2',
-      body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perferendis est fuga alias non quisquam.'
+      title: 'Task 2'
     }
   ])
-  const [taskTitle, setTaskTitle] = useState('')
-  const [taskBody, setTaskBody] = useState('')
-  const [editTitle, setEditTitle] = useState('')
-  const [editBody, setEditBody] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const id = tasks.length ? tasks[tasks.length - 1].id + 1 : 1
-    const newTask = { id, title: taskTitle, body: taskBody }
+  // const handleEditSubmit = (id, title) => {
+  //   const editedTask = [...tasks].filter(task => task.id === id)
+  //   const remainigTasks = tasks.filter(task => task.id !== id)
+  //   editedTask.title = title;
+  //   setTasks([...remainigTasks, ...editedTask])
+  // } ***********************dobar nacin ali ima problem kad se edituje, onda ga pozicionira na bottom
+
+  const handleEditSubmit = (id, title) => {
+    const taskIndex = tasks.findIndex(task => task.id === id)
+
+    if (taskIndex !== -1) {
+      const updatedTasks = [...tasks]
+      updatedTasks[taskIndex].title = title
+      setTasks(updatedTasks)
+    }
+  }
+
+  const handleAddNewSubmit = (title) => {
+    const id = Date.now().toString()
+    const newTask = { id, title }
     const allTasks = [...tasks, newTask]
     setTasks(allTasks)
-    setTaskTitle('')
-    setTaskBody('')
   }
 
   const handleDelete = (id) => {
@@ -35,28 +43,15 @@ function App() {
     setTasks(tasksList)
   }
 
-  const handleEdit = (id) => {
-    const updatedTask = { id, title: editTitle, body: editBody }
-    setTasks(tasks.map(task => task.id === id ? updatedTask : task))
-  }
-
   return (
     <div className="App">
       <AddTask
-        handleSubmit={handleSubmit}
-        taskTitle={taskTitle}
-        setTaskTitle={setTaskTitle}
-        taskBody={taskBody}
-        setTaskBody={setTaskBody}
+        handleAddNewSubmit={handleAddNewSubmit}
       />
-      <Content
+      <ListOfTasks
         tasks={tasks}
         handleDelete={handleDelete}
-        setEditTitle={setEditTitle}
-        setEditBody={setEditBody}
-        handleEdit={handleEdit}
-        editTitle={editTitle}
-        editBody={editBody}
+        handleEditSubmit={handleEditSubmit}
       />
     </div>
   );

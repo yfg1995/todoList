@@ -1,21 +1,24 @@
 import TaskItem from './TaskItem'
 
-const ListOfTasks = ({ tasks, handleDelete, handleEdit, setEditTitle, setEditBody, editTitle, editBody }) => {
+const ListOfTasks = ({ tasks, handleDelete, handleEditSubmit }) => {
   return (
+    <div className="listOfTasks">
+    <h2>List of Tasks</h2>
+    {tasks.length ? (
     <ul>
       {tasks.map((task) => (
-        <TaskItem 
+        <TaskItem
           task={task}
           key={task.id}
           handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          setEditTitle={setEditTitle}
-          setEditBody={setEditBody}
-          editTitle={editTitle}
-          editBody={editBody}
+          handleEditSubmit={handleEditSubmit}
         />
       ))}
     </ul>
+    ) : (
+      <p>nema nista, slabo</p>
+    )}
+    </div>
   )
 }
 
